@@ -2,9 +2,9 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 public abstract class Event {
-    private String type;
-    private LocalDateTime time;
-    private Map<String, String> context;
+    private final String type;
+    private final LocalDateTime time;
+    private final Map<String, String> context;
 
     public Event(String type, LocalDateTime time, Map<String, String> context) {
         this.type = type;
