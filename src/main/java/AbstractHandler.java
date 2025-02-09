@@ -1,8 +1,9 @@
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class EventHandlerImpl implements EventHandler{
-    public void handle(Event event) {
+public abstract class AbstractHandler implements ILogging {
+    @Override
+    public void globalProcess(Event event){
         System.out.println("Тип события: " + event.getType());
         System.out.println("Время события: " + event.getTime());
         System.out.println("Ключи контекста: " + event.getContext());
@@ -11,10 +12,15 @@ public class EventHandlerImpl implements EventHandler{
         Duration duration = Duration.between(event.getTime(), now);
         System.out.println("Время между событием и текущим: " + duration.toMillis() + " мс");
 
-        // Обрабатываем событие
-        event.action();
+        childProcess(event);
 
-        // Логируем конец обработки
-        System.out.println("Событие обработано");
+        System.out.println("Событие обработано \n");
     }
+
+    @Override
+    public int getEventNumber(Event event) {
+        return event.getType();
+    }
+
+    protected abstract void childProcess(Event event);
 }
